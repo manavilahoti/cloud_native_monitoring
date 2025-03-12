@@ -1,0 +1,10 @@
+Flask
+MarkupSafe
+Werkzeug
+itsdangerous
+psutil
+plotly
+tenacity
+boto3
+kubernetes
+python-dotenv
