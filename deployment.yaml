@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-project-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devops-project
+  template:
+    metadata:
+      labels:
+        app: devops-project
+    spec:
+      imagePullSecrets:
+      - name: aws-ecr-secret  # Add this if using private ECR
+      containers:
+      - name: devops-project-container
+        image: d637423481013.dkr.ecr.ap-south-1.amazonaws.com/devops-project:latest  # Use correct region
+        ports:
+        - containerPort: 5001  # Make sure this matches the app’s actual port
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
