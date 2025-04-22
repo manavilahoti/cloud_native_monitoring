@@ -6,6 +6,11 @@ pipeline {
                 git url: 'https://github.com/manavilahoti/cloud_native_monitoring', branch: 'feature/pipeline'
             }
         }
+        stage('SonarQube Analysis') {
+            steps {
+                sh 'sonar-scanner'
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 sh 'docker build --platform linux/amd64 -t 779846818072.dkr.ecr.ap-south-1.amazonaws.com/my-cloud-native-repo:latest .'
