@@ -12,13 +12,11 @@ spec:
       labels:
         app: devops-project
     spec:
-      imagePullSecrets:
-      - name: aws-ecr-secret  # Add this if using private ECR
       containers:
-      - name: devops-project-container
-        image: d637423481013.dkr.ecr.ap-south-1.amazonaws.com/devops-project:latest  # Use correct region
+      - name: my-cloud-native-repo
+        image: 779846818072.dkr.ecr.ap-south-1.amazonaws.com/my-cloud-native-repo:latest
         ports:
-        - containerPort: 5001  # Make sure this matches the app’s actual port
+        - containerPort: 5001
         resources:
           requests:
             memory: "256Mi"
@@ -26,3 +24,5 @@ spec:
           limits:
             memory: "512Mi"
             cpu: "500m"
+      imagePullSecrets:
+      - name: my-ecr-secret
