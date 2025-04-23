@@ -2,8 +2,8 @@ pipeline {
   agent any
 
   environment {
-    // Since SonarQube lives at http://localhost:9000 on your machine:
-    SONAR_HOST_URL = 'http://localhost:9000'
+
+    SONAR_HOST_URL = 'http://host.docker.internal:9000'
 
     // Replace 'sonar-token' with your actual Jenkins Secret Text credential ID
     SONAR_TOKEN    = credentials('sonar-token')
