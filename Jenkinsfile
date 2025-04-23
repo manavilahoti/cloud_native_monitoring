@@ -8,10 +8,12 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                sh '''
-                export PATH="/usr/local/sonar-scanner/bin:$PATH"
-                sonar-scanner
-                '''
+                withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+                    sh '''
+                    export PATH="/usr/local/sonar-scanner/bin:$PATH"
+                    sonar-scanner
+                    '''
+                }
             }
         }
         stage('Build Docker Image') {
