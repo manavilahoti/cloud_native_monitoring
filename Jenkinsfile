@@ -3,9 +3,7 @@ pipeline {
 
   environment {
 
-    SONAR_HOST_URL = 'http://host.docker.internal:9000'
-
-    // Replace 'sonar-token' with your actual Jenkins Secret Text credential ID
+    SONAR_HOST_URL = 'http:/localhost:9000'
     SONAR_TOKEN    = credentials('sonar-token')
   }
 
@@ -19,10 +17,14 @@ pipeline {
     stage('SonarQube Analysis') {
       steps {
         sh '''
-          # make sure the scanner binary is on PATH
+          
           export PATH="/usr/local/sonar-scanner/bin:$PATH"
 
-          # point at your local SonarQube and pass the token
+          
+          echo "Checking SonarQube at ${SONAR_HOST_URL}"
+          curl -sSf ${SONAR_HOST_URL}/api/server/version || { echo "ERROR: Cannot reach SonarQube at ${SONAR_HOST_URL}"; exit 1; }
+
+          
           sonar-scanner \
             -Dsonar.host.url=${SONAR_HOST_URL} \
             -Dsonar.login=${SONAR_TOKEN}
