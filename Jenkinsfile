@@ -2,7 +2,10 @@ pipeline {
   agent any
 
   environment {
+    // Since SonarQube lives at http://localhost:9000 on your machine:
     SONAR_HOST_URL = 'http://localhost:9000'
+
+    // Replace 'sonar-token' with your actual Jenkins Secret Text credential ID
     SONAR_TOKEN    = credentials('sonar-token')
   }
 
@@ -16,10 +19,10 @@ pipeline {
     stage('SonarQube Analysis') {
       steps {
         sh '''
-          # ensure sonar-scanner is on the PATH
+          # make sure the scanner binary is on PATH
           export PATH="/usr/local/sonar-scanner/bin:$PATH"
 
-          # run the analysis
+          # point at your local SonarQube and pass the token
           sonar-scanner \
             -Dsonar.host.url=${SONAR_HOST_URL} \
             -Dsonar.login=${SONAR_TOKEN}
@@ -30,8 +33,7 @@ pipeline {
     stage('Build Docker Image') {
       steps {
         sh '''
-          docker build \
-            --platform linux/amd64 \
+          docker build --platform linux/amd64 \
             -t 779846818072.dkr.ecr.ap-south-1.amazonaws.com/my-cloud-native-repo:latest \
             .
         '''
