@@ -8,7 +8,10 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                sh 'sonar-scanner'
+                sh '''
+                export PATH="/usr/local/sonar-scanner/bin:$PATH"
+                sonar-scanner
+                '''
             }
         }
         stage('Build Docker Image') {
