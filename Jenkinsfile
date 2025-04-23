@@ -22,7 +22,7 @@ pipeline {
 
           
           echo "Checking SonarQube at ${SONAR_HOST_URL}"
-          curl -sSf ${SONAR_HOST_URL}/api/server/version || { echo "ERROR: Cannot reach SonarQube at ${SONAR_HOST_URL}"; exit 1; }
+          curl -sSf ${SONAR_HOST_URL} || { echo "ERROR: Cannot reach SonarQube at ${SONAR_HOST_URL}"; exit 1; }
 
           
           sonar-scanner \
